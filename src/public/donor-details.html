@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Donor Details</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    #donorDetails {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+
+    .motivationalMessage {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+    }
+
+    .returnButton {
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Here are your contact details</h1>
+  <div id="donorDetails"></div>
+
+  <p class="motivationalMessage">Your generous act of blood donation can save lives and make a difference.</p>
+  <div class="returnButton">
+    <button onclick="returnToHomepage()">Return to Homepage</button>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Get the donor ID from the URL attribute
+      var donorId = getUrlParameter('id');
+
+      // Fetch donor details from the API
+      $.ajax({
+        url: 'http://localhost:3000/api/donors/' + donorId,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          // Display the donor details
+          var donorDetails = `
+            <p>Donor ID: ${data.donor_id}</p>
+            <p>First Name: ${data.first_name}</p>
+            <p>Last Name: ${data.last_name}</p>
+            <p>Date of Birth: ${data.date_of_birth.slice(0, 10)}</p>
+            <p>Gender: ${data.gender}</p>
+            <p>Blood Type: ${data.blood_type}</p>
+            <p>Contact Number: ${data.contact_number}</p>
+            <p>Email: ${data.email}</p>
+            <p>Address: ${data.address}</p>
+          `;
+          $('#donorDetails').html(donorDetails);
+        },
+        error: function(xhr, status, error) {
+          // Handle error case
+          console.log(error);
+          $('#donorDetails').html('Error fetching donor details.');
+        }
+      });
+    });
+
+    function getUrlParameter(name) {
+      // Get the URL query parameters
+      var urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    function returnToHomepage() {
+      window.location.href = 'http://localhost:3000/'; // Replace with the actual URL of your homepage
+    }
+  </script>
+</body>
+</html>

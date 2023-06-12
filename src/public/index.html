@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Blood Bank Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blood Bank Management System" />
+    <meta name="keywords" content="blood bank, blood donation, blood management, health, healthcare, hospital, medical, system" />
+    <meta content="Your Name" name="author" />
+    <meta content="y21btrcc021@jainuniversity.ac.im" name="Email" />
+    <meta content="https://jainuniversity.ac.in" name="Website" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <!-- Main css -->
+    <link href="css/style-dark.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+    <link href="css/colors/default.css" rel="stylesheet" id="color-opt">
+</head>
+
+<body>
+ 
+    <!-- Start Home -->
+    <section class="bg-half-260 d-flex align-items-center bg-dark" style="background-image: url('images/blood-donation.jpg'); background-position: top center;">
+        <div class="container z-index-1">
+            <div class="background-lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="title-heading text-center">
+                        <h4 class="heading text-white mb-4 title-dark fw-bold">The Biggest <br> Blood Bank</h4>
+                        <p class="text-white title-dark mb-0 para-desc mx-auto">We are a leading blood bank dedicated to connecting blood donors with those in need!</p>
+
+                        <div class="mt-4 pt-2">
+                            <a href="donor-register.html" class="btn btn-primary rounded-md">Donate Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </section>
+    <!--end section-->
+    <!-- End Home -->
+
+    <!-- Start -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="card border-0 text-center features feature-primary feature-clean">
+                        <div class="icons text-center mx-auto">
+                            <i class="uil uil-card-atm d-block rounded-md h3 mb-0"></i>
+                        </div>
+
+                        <div class="content mt-4 pt-2">
+                            <h5 class="mb-3">Find Blood Donor</h5>
+                            <p class="text-muted mb-0">Start searching for blood donors who can provide the blood you need.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-lg-3 col-md-6 col-12 mt-5 mt-sm-0">
+                    <div class="card border-0 text-center features feature-primary feature-clean">
+                        <div class="icons text-center mx-auto">
+                            <i class="uil uil-bitcoin-circle d-block rounded-md h3 mb-0"></i>
+                        </div>
+
+                        <div class="content mt-4 pt-2">
+                            <h5 class="mb-3">Register as a Donor</h5>
+                            <p class="text-muted mb-0">Submit a blood request to the blood bank and get connected with potential donors.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-lg-3 col-md-6 col-12 mt-5 mt-lg-0">
+                    <div class="card border-0 text-center features feature-primary feature-clean">
+                        <div class="icons text-center mx-auto">
+                            <i class="uil uil-wallet d-block rounded-md h3 mb-0"></i>
+                        </div>
+
+                        <div class="content mt-4 pt-2">
+                            <h5 class="mb-3">Emergency Blood Supply</h5>
+                            <p class="text-muted mb-0">In critical situations, access our emergency blood supply to ensure a timely and life-saving transfusion for patients.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-lg-3 col-md-6 col-12 mt-5 mt-lg-0">
+                    <div class="card border-0 text-center features feature-primary feature-clean">
+                        <div class="icons text-center mx-auto">
+                            <i class="uil uil-layers d-block rounded-md h3 mb-0"></i>
+                        </div>
+
+                        <div class="content mt-4 pt-2">
+                            <h5 class="mb-3">Quality and Safety</h5>
+                            <p class="text-muted mb-0">We ensure the highest standards of quality and safety inthe collection, storage, and distribution of blood. </p>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+
+        <div class="container mt-100 mt-60">
+           
+
+            <div class="container mt-100 mt-60">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="section-title text-center mb-5 pb-3">
+                            <h4 class="title mb-4">Available Donors</h4>
+                            <p class="text-muted para-desc mb-0 mx-auto">Our blood bank has a vast network of committed blood donors. This ensures a consistent supply of blood, allowing us to meet the needs of patients in a timely manner.</p>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            
+                <div class="row g-4" id="donorsContainer">
+                    <!-- Donors will be dynamically added here -->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end container-->
+            
+            <script>
+                // Make AJAX request to fetch donors data
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'http://localhost:3000/api/donors', true);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var donors = JSON.parse(xhr.responseText);
+            
+                        // Create donor elements and append to the container
+                        var container = document.getElementById('donorsContainer');
+                        donors.forEach(function (donor) {
+                            var col = document.createElement('div');
+                            col.className = 'col-lg-3 col-md-4';
+            
+                            var div = document.createElement('div');
+                            div.className = 'creators creator-primary creators-two bg-white d-flex align-items-center p-3 rounded-md shadow';
+            
+                            var dFlex = document.createElement('div');
+                            dFlex.className = 'd-flex align-items-center';
+            
+                            var positionRelative = document.createElement('div');
+                            positionRelative.className = 'position-relative d-inline-flex';
+            
+                            var img = document.createElement('img');
+                            img.src = '/images/donor.png'; // Donor icon image URL
+                            img.className = 'avatar avatar-md-sm shadow-md rounded-pill';
+                            img.alt = '';
+            
+                            var online = document.createElement('span');
+                            online.className = 'online text-success';
+                            
+            
+                            positionRelative.appendChild(img);
+                            positionRelative.appendChild(online);
+            
+                            var donorDetails = document.createElement('div');
+                            donorDetails.className = 'ms-3';
+            
+                            var h6 = document.createElement('h6');
+                            h6.className = 'mb-0';
+                            var a = document.createElement('a');
+                            a.href = 'recipients.html?donor_id=' + donor.donor_id; // Assuming this is the link you want to add
+                            a.className = 'text-dark name';
+                            a.textContent = donor.first_name + ' ' + donor.last_name; // Assuming the donor object has 'first_name' and 'last_name' properties
+                            h6.appendChild(a);
+            
+                            var small = document.createElement('small');
+                            small.className = 'text-muted';
+                            small.textContent = donor.blood_type; // Assuming the donor object has a 'blood_group' property
+            
+                            donorDetails.appendChild(h6);
+                            donorDetails.appendChild(small);
+            
+                            dFlex.appendChild(positionRelative);
+                            dFlex.appendChild(donorDetails);
+            
+                            div.appendChild(dFlex);
+                            col.appendChild(div);
+            
+                            container.appendChild(col);
+                        });
+                    } else {
+                        console.error('Request failed. Status:', xhr.status);
+                    }
+                };
+                xhr.send();
+</script>            
+        <!--end container-->
+
+        
+
+        <div class="container mt-100 mt-60">
+            <div class="row">
+                <div class="col">
+                    <div class="section-two rounded-md shadow bg-gradient-primary px-md-5 px-4">
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <div class="section-title text-md-start text-center">
+                                    <h6 class="text-white-50 mb-1">Join the Blood Bank Community</h6>
+                                    <h4 class="title text-white title-dark mb-4">Become a Donor!</h4>
+
+                                    <p class="text-white-50 para-desc mb-0">We are dedicated to connecting donors with those in need of blood. Join our blood bank community and save lives!</p>
+                                </div>
+                            </div>
+                            <!--end col-->
+
+                            <div class="col-md-4 mt-4 pt-2 mt-sm-0 pt-sm-0">
+                                <div class="text-md-end text-center">
+                                    <a href="donor-register.html" class="btn btn-primary rounded-md">Become a donor <i class="uil uil-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+
+       
+
+        
+    </section>
+    <!--end section-->
+    <!-- End -->
+
+    <!-- Footer Start -->
+   
+    <!--end footer-->
+    <!-- Footer End -->
+
+    <!-- Back to top -->
+    <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top rounded-pill fs-5"><i data-feather="arrow-up" class="fea icon-sm icons align-middle"></i></a>
+    <!-- Back to top -->
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  // Function to send the GET request and handle the response
+  function sendGetRequest() {
+    // Make a GET request to your Express server
+    axios.get('http://localhost:3000/api/donors')
+      .then(function (response) {
+        // Log the response data
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        // Log any error that occurred
+        console.error(error);
+      });
+  }
+
+  // Call the function to send the GET request
+  sendGetRequest();
+</script>
+
+    <!-- Wallet Modal -->
+
+    <!-- Style switcher -->
+    
+    <!-- javascript -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/shuffle.min.js"></script>
+    <script src="js/feather.min.js"></script>
+    <!-- Main Js -->
+    <script src="js/plugins.init.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
